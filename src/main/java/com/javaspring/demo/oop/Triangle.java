@@ -1,4 +1,4 @@
-package com.javaspring.demo;
+package com.javaspring.demo.oop;
 
 public class Triangle extends Shape implements PerimeterInterface{
      private double base;

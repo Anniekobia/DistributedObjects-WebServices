@@ -1,4 +1,4 @@
-package com.javaspring.demo;
+package com.javaspring.demo.oop;
 
 public abstract class Shape {
     protected double area;

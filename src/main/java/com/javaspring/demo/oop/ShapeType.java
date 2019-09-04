@@ -1,4 +1,4 @@
-package com.javaspring.demo;
+package com.javaspring.demo.oop;
 
 public enum ShapeType {
     TWO_D,THREE_D
