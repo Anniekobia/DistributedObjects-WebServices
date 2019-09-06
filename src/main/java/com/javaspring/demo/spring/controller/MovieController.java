@@ -1,5 +1,6 @@
 package com.javaspring.demo.spring.controller;
 
+import com.javaspring.demo.spring.model.Actor;
 import com.javaspring.demo.spring.model.Movie;
 import com.javaspring.demo.spring.service.MovieService;
 import org.springframework.validation.annotation.Validated;
@@ -31,6 +32,11 @@ public class MovieController {
     @PostMapping
     public Movie create(@Validated(Movie.Create.class)@RequestBody Movie movie){
         return movieService.create(movie);
+    }
+
+    @PostMapping(value = "{id}/actors")
+    public Actor create(@PathVariable Long id,@RequestBody Actor actor){
+        return movieService.createActor(id,actor);
     }
 
     @DeleteMapping(value = "{id}")

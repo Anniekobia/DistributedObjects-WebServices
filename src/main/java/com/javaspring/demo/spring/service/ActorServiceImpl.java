@@ -1,39 +1,51 @@
 package com.javaspring.demo.spring.service;
 
+import com.javaspring.demo.spring.NotFoundException;
 import com.javaspring.demo.spring.model.Actor;
+import com.javaspring.demo.spring.repositories.ActorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ActorServiceImpl implements ActorService {
+    private final ActorRepository actorRepository;
+
+    public ActorServiceImpl(ActorRepository actorRepository) {
+        this.actorRepository = actorRepository;
+    }
+
     @Override
     public List<Actor> findAll() {
-        return null;
+        return actorRepository.findAll();
     }
 
     @Override
     public Actor findById(Long id) {
-        return null;
+        return actorRepository.findById(id).orElseThrow(()->new NotFoundException("No record with id "+id+" found"));
     }
 
     @Override
     public Actor create(Actor actor) {
-        return null;
+        return actorRepository.save(actor);
     }
 
     @Override
     public void delete(Long id) {
-
+        actorRepository.deleteById(id);
     }
 
     @Override
     public Actor update(Actor actor) {
-        return null;
+        Actor foundActor = findById(actor.getId());
+        foundActor.setName(actor.getName());
+        return actorRepository.save(foundActor);
     }
 
     @Override
     public Actor update(Long id, Actor actor) {
-        return null;
+        Actor foundActor = findById(id);
+        foundActor.setName(actor.getName());
+        return actorRepository.save(foundActor);
     }
 }

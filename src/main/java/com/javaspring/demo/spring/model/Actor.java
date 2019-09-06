@@ -8,11 +8,17 @@ public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String name;
 
-    public Actor(Long id, String name) {
+    @ManyToOne
+    @JoinColumn(name = "movie_id_fk")
+    private Movie movie;
+
+    public Actor(Long id, String name, Movie movie) {
         this.id = id;
         this.name = name;
+        this.movie=movie;
     }
 
     private Actor(){
@@ -33,5 +39,13 @@ public class Actor {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 }
