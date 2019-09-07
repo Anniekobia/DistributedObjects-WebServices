@@ -1,5 +1,7 @@
 package com.javaspring.demo.spring.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +13,7 @@ public class Actor {
 
     private String name;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "movie_id_fk")
     private Movie movie;

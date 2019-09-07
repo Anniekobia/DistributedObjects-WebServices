@@ -2,6 +2,7 @@ package com.javaspring.demo.spring.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name="movies")
@@ -20,6 +21,8 @@ public class Movie {
     @Column(name="year_released")
     private String yearReleased;
 
+    @OneToMany(mappedBy = "movie")
+    private List<Actor> actor;
 
     public Movie(String year,String name) {
         this.yearReleased = year;
@@ -52,6 +55,14 @@ public class Movie {
 
     public void setYearReleased(String yearReleased) {
         this.yearReleased = yearReleased;
+    }
+
+    public List<Actor> getActor() {
+        return actor;
+    }
+
+    public void setActor(List<Actor> actor) {
+        this.actor = actor;
     }
 
     public interface Create{}
