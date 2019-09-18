@@ -1,32 +1,40 @@
 package com.javaspring.demo.spring.model;
 
+import com.javaspring.demo.spring.model.Actor;
+import com.javaspring.demo.spring.model.Category;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name="movies")
+@Table(name = "movies")
 public class Movie {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
-    @Column(name="id")
+    @Column(name = "id")
     @NotNull(groups = Update.class)
     private Long id;
 
-    @Column(name="name")
+    @Column(name = "name")
     @NotNull(groups = Create.class)
     private String name;
 
-    @Column(name="year_released")
+    @Column(name = "year_released")
     private String yearReleased;
 
     @OneToMany(mappedBy = "movie")
     private List<Actor> actor;
 
-    public Movie(String year,String name) {
-        this.yearReleased = year;
+    @ManyToMany(mappedBy = "movies")
+    private Set<Category> categories = new HashSet<>();
+
+    public Movie(String name, String yearReleased) {
         this.name = name;
+        this.yearReleased = yearReleased;
     }
 
     private Movie(){
@@ -65,7 +73,25 @@ public class Movie {
         this.actor = actor;
     }
 
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", yearReleased='" + yearReleased + '\'' +
+                ", actor=" + actor +
+                ", categories=" + categories +
+                '}';
+    }
     public interface Create{}
+
     public interface Update{}
 }
-
