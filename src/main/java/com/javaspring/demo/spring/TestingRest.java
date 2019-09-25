@@ -1,10 +1,7 @@
 package com.javaspring.demo.spring;
 
 import com.javaspring.demo.FeignRestTry;
-import com.javaspring.demo.spring.model.Appointment;
-import com.javaspring.demo.spring.model.Lecturer;
-import com.javaspring.demo.spring.model.LecturerStudentAppointment;
-import com.javaspring.demo.spring.model.Student;
+import com.javaspring.demo.spring.model.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -47,19 +44,36 @@ public class TestingRest implements CommandLineRunner {
 //        Movie movieByName = restTemplate.getForObject(url, Movie.class);
 //        System.err.println(movieByName.toString());
 
-        List <Lecturer> lecturersList = feignRestTry.getLecturers();
-        System.err.println(lecturersList.toString());
+//        List <Teacher> lecturersList = feignRestTry.getLecturers();
+//        System.err.println(lecturersList.toString());
+//
+//        Student student = new Student("Bernice","94867");
+//        student = feignRestTry.registerStudent(student);
+//        System.out.println(student.toString());
+//
+//        String studentNumber = student.getStudentNumber();
+//        Student registeredStudent = feignRestTry.viewRegisteredStudent(studentNumber);
+//        System.err.println(registeredStudent.toString());
+//
+//        LecturerStudentAppointment lecturerStudentAppointment = new LecturerStudentAppointment("5","2");
+//        Appointment appointment = feignRestTry.createAppointment(lecturerStudentAppointment);
+//        System.out.println("Appointment ID:"+appointment.getId()+"\n"+appointment.getStudent().toString()+"\n"+ appointment.getTeacher()+"\n"+appointment.getConfirmed());
+//
+//        Appointment confirmedAppointment = feignRestTry.confirmAppointment(appointment.getId(),student.getId());
+//        System.out.println("Appointment ID:"+confirmedAppointment.getId()+"\n"+confirmedAppointment.getStudent().toString()+"\n"+ confirmedAppointment.getTeacher()+"\n"+confirmedAppointment.getConfirmed());
+//
 
-        Student student = new Student("Bernice","94867");
-        student = feignRestTry.registerStudent(student);
-        System.out.println(student.toString());
+        Student student = feignRestTry.register(new StudentDetails("Annunziata Kinya Kobia","094501"));
+        System.err.println(student.toString());
 
-        String studentNumber = student.getStudentNumber();
-        Student registeredStudent = feignRestTry.viewRegisteredStudent(studentNumber);
-        System.err.println(registeredStudent.toString());
+        Attachment attachment =feignRestTry.requestAttachment(6L,student.getId());
+        System.out.println("Everything"+attachment.toString()+"\nCompany"+attachment.getCompany().toString()+"\nDepartment"+attachment.getDepartment()+"\nRejected"+attachment.getRejected());
 
-        LecturerStudentAppointment lecturerStudentAppointment = new LecturerStudentAppointment("5","2");
-        Appointment appointment = feignRestTry.createAppointment(lecturerStudentAppointment);
-        System.out.println(appointment.getStudent().toString()+"\n"+ appointment.getLecturer()+"\n"+appointment.getConfirmed());
+        Attachment departmentAttachment=feignRestTry.requestDepartment(6L,student.getId(),11L);
+        System.err.println(departmentAttachment.toString());
+
+        Void response = feignRestTry.response(new CompanyReject(49L,11L,6L));
+        response.toString();
+
     }
 }
